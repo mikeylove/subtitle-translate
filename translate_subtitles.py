@@ -1,3 +1,4 @@
+from cache import TranslationCache
 from formats import FormatHandler
 import os
 import sqlite3
@@ -27,14 +28,16 @@ def translate_subtitles(format, input_file, from_lang, output_file, to_lang):
   format_handler.write()
 
 def translate_and_store(content, from_lang, to_lang):
-  stored_translation = existing_translation('translators-google', from_lang, to_lang, content)
+  cache = TranslationCache('translators-google', from_lang, to_lang)
+
+  stored_translation = cache.existing_translation(content)
 
   if stored_translation:
     return stored_translation[0], True
 
   translated_text = ts.translate_text(content, 'google', from_language=from_lang, to_language=to_lang)
-  cur.execute(QUERIES.store_translation, ('translators-google', from_lang, to_lang, content, translated_text))
-  con.commit()
+
+  cache.store(content, translated_text)
 
   return translated_text, False
 
