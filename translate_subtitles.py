@@ -25,8 +25,8 @@ def translate(content, from_lang, to_lang):
     stored_translation = existing_translation('translators-google', from_lang, to_lang, content)
 
     if stored_translation is None:
-      translated_text = ts.translate_text(content, 'google', from_language="en", to_language=to_lang)
-      cur.execute("INSERT INTO translations (api, source, target, source_text, target_text) VALUES (?, ?, ?, ?, ?)", ('translators-google', 'en', to_lang, content, translated_text))
+      translated_text = ts.translate_text(content, 'google', from_language=from_lang, to_language=to_lang)
+      cur.execute("INSERT INTO translations (api, source, target, source_text, target_text) VALUES (?, ?, ?, ?, ?)", ('translators-google', from_lang, to_lang, content, translated_text))
       con.commit()
       print(f'"{translated_text}"')
     else:
