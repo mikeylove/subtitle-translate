@@ -1,4 +1,5 @@
 from cache import TranslationCache
+from engine import translators_google
 from formats import FormatHandler
 import os
 import sqlite3
@@ -28,14 +29,15 @@ def translate_subtitles(format, input_file, from_lang, output_file, to_lang):
   format_handler.write()
 
 def translate_and_store(content, from_lang, to_lang):
-  cache = TranslationCache('translators-google', from_lang, to_lang)
+  translator = translators_google
+  cache = TranslationCache(translator.key, from_lang, to_lang)
 
   stored_translation = cache.existing_translation(content)
 
   if stored_translation:
     return stored_translation[0], True
 
-  translated_text = ts.translate_text(content, 'google', from_language=from_lang, to_language=to_lang)
+  translated_text = translator.translate(content, from_lang, to_lang)
 
   cache.store(content, translated_text)
 
