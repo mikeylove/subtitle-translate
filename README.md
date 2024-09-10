@@ -1,3 +1,6 @@
+## Command line-based translation for various subtitle formats.
+
+```
 usage: translate.py [-h] --format FORMAT --input-file INPUT_FILE --output-file OUTPUT_FILE --source_language SOURCE_LANGUAGE --target_language TARGET_LANGUAGE
                     [--cache-db-filename CACHE_DB_FILENAME]
 
@@ -14,3 +17,4 @@ options:
                         Target language code
   --cache-db-filename CACHE_DB_FILENAME
                         Full path to cache database (default: translate-cache.db)
+```
