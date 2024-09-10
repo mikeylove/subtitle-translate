@@ -33,3 +33,9 @@ options:
 
 #### DFXP
 1) XML is a funny beast. Compound subtitle entries (multiple lines separated by self-closing `br` tags) hierarchically are chains of elements with children and tail/text nodes. Yeah, I don't really fully get it either.
+
+### Translation Engine Notes
+- The code currently uses the python module `translators`, and inside of that the `google` interface. I think this queries against Google Translate? Not sure, but it didn't require any kind of API key or registration, which was pretty great. Who wants to think about that kind of stuff?
+
+### Caching
+- The code uses `sqlite3` to maintain a database of previous translations. This provides a nice speedup in the case of making editorial changes to input subtitle sources. Queries of the same content against the same engine/backend combination (currently hardcoded as `translators-google`) will check this cache before attempting a new translation.
