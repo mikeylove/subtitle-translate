@@ -15,6 +15,28 @@ QUERIES = SimpleNamespace(**{
 if cur.execute(QUERIES.find_table).fetchone() is None:
   cur.execute(QUERIES.create_table)
 
+def stats():
+  stats_overall()
+  stats_by_language()
+  stats_by_engine()
+  stats_by_engine_and_language()
+
+def stats_overall():
+  total = cur.execute('SELECT COUNT(*) FROM translations').fetchone()[0]
+  print(f'Total translations in cache: {total}')
+
+def stats_by_language():
+  for row in cur.execute('SELECT source, target, COUNT(*) FROM translations GROUP BY source, target'):
+    print(f'{row[0]} -> {row[1]}: {row[2]} translations')
+
+def stats_by_engine():
+  for row in cur.execute('SELECT api, COUNT(*) FROM translations GROUP BY api'):
+    print(f'{row[0]}: {row[1]} translations')
+
+def stats_by_engine_and_language():
+  for row in cur.execute('SELECT api, source, target, COUNT(*) FROM translations GROUP BY api, source, target'):
+    print(f'{row[0]}: {row[1]} -> {row[2]}: {row[3]} translations')
+
 def existing_translation(api, source, target, source_text):
   return cur.execute(QUERIES.find_translation, (api, source, target, source_text)).fetchone()
 
