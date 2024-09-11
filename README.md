@@ -3,7 +3,7 @@
 ### Usage
 ```
 usage: translate.py [-h] --format FORMAT --input-file INPUT_FILE --output-file OUTPUT_FILE --source_language SOURCE_LANGUAGE --target_language TARGET_LANGUAGE
-                    [--cache-db-filename CACHE_DB_FILENAME]
+                    [--cache-db-filename CACHE_DB_FILENAME] [--cache-stats]
 
 options:
   -h, --help            show this help message and exit
@@ -18,7 +18,8 @@ options:
                         Target language code
   --cache-db-filename CACHE_DB_FILENAME
                         Full path to cache database (default: translate-cache.db)
-```
+  --cache-stats         Print cache statistics and quit
+m```
 
 ### General Notes
 - I can't speak to the accuracy of format handling, as these modules weren't designed according to a spec (lol) but rather against example exports provided to me. I might do a followup for accuracy in that regard, but am quickly approaching the "I'm bored with this" state of development so...guess we'll see. 🤷🏻‍♂️

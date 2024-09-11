@@ -35,7 +35,7 @@ argmap = {
     'required': False,
     'default': False,
     'action': 'store_true',
-    'help': 'Print cache statistics'
+    'help': 'Print cache statistics and quit'
   }
 }
 
