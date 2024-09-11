@@ -1,26 +1,6 @@
 from cache import TranslationCache
 from engine import translators_google
 from formats import FormatHandler
-import os
-import sqlite3
-import translators as ts
-from types import SimpleNamespace
-
-con = sqlite3.connect(os.getenv('TRANSLATE_CACHE_DB_FILENAME', 'translate-cache.db'))
-cur = con.cursor()
-
-QUERIES = SimpleNamespace(**{
-  'find_table': "SELECT name FROM sqlite_master WHERE name='translations'",
-  'create_table': 'CREATE TABLE translations (id INTEGER PRIMARY KEY, api TEXT, source TEXT, target TEXT, source_text TEXT, target_text TEXT)',
-  'find_translation': 'SELECT target_text FROM translations WHERE api=? AND source=? AND target=? AND source_text=?',
-  'store_translation': 'INSERT INTO translations (api, source, target, source_text, target_text) VALUES (?, ?, ?, ?, ?)',
-})
-
-if cur.execute(QUERIES.find_table).fetchone() is None:
-  cur.execute(QUERIES.create_table)
-
-def existing_translation(api, source, target, source_text):
-  return cur.execute(QUERIES.find_translation, (api, source, target, source_text)).fetchone()
 
 def translate_subtitles(format, input_file, from_lang, output_file, to_lang):
   format_handler = FormatHandler(input_file, output_file).for_format(format)
